@@ -1,0 +1,21 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  "build": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --minify",
+  "watch": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
+  "start": "live-server",
+  "dev": "concurrently \"npm run watch\" \"npm run start\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
+  }
+}

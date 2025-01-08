@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO App</title>
+    <script src="app.js" defer></script>
+    <link href="dist/styles.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 text-gray-800 p-4">
+    <div class="max-w-3xl mx-auto py-6">
+      <div class="relative flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">TODO App</h1>
+        <div class="flex items-center justify-end p-4">
+          <button
+            id="openTaskModal"
+            class="w-12 aspect-square rounded-full hover:bg-slate-200"
+          >
+            <i class="fas text-lg text-gray-500 fa-plus"></i>
+          </button>
+          <button
+            id="toggleArchived"
+            class="w-12 aspect-square rounded-full hover:bg-slate-200"
+          >
+            <i class="fas text-lg text-gray-500 fa-archive"></i>
+          </button>
+        </div>
+
+        <div
+          id="archivedList"
+          class="hidden bg-black/20 flex-col gap-2 p-2 absolute z-10 top-full left-0 right-0 w-full h-[80vh] overflow-y-auto backdrop-blur-md rounded-xl scrollbar-hide"
+        ></div>
+      </div>
+
+      <div
+        id="newTaskModal"
+        class="fixed hidden z-10 inset-0 items-center justify-center"
+      >
+        <div class="backdrop-blur-md p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+          <h2 class="text-xl mb-2">Add New Task</h2>
+
+          <div class="mb-4">
+            <label
+              for="taskTitle"
+              class="block text-sm font-medium text-gray-700"
+              >Task Title</label
+            >
+            <input
+              type="text"
+              id="taskTitle"
+              name="taskTitle"
+              class="border border-gray-300 rounded-lg p-3 w-full mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter a task title"
+              required
+              minlength="4"
+              aria-required="true"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label
+              for="taskDescription"
+              class="block text-sm font-medium text-gray-700"
+              >Task Description</label
+            >
+            <textarea
+              id="taskDescription"
+              name="taskDescription"
+              class="border border-gray-300 rounded-lg p-3 w-full mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[80px] max-h-[200px]"
+              placeholder="Enter a task description"
+              required
+              minlength="4"
+              aria-required="true"
+            ></textarea>
+          </div>
+
+          <div class="flex w-full justify-center gap-2">
+            <button
+              type="submit"
+              id="addTask"
+              class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
+            >
+              Add Task
+            </button>
+            <button
+              type="button"
+              id="closeNewTaskModal"
+              class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mainList" class="flex flex-col gap-2"></div>
+
+      <!-- edit task modal -->
+      <div
+        id="editModal"
+        class="fixed hidden inset-0 items-center justify-center"
+      >
+        <div class="backdrop-blur-md p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+          <h2 class="text-xl mb-2">Edit Task</h2>
+          <input
+            id="editTaskTitle"
+            type="text"
+            class="border border-gray-300 rounded-lg p-3 w-full mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <textarea
+            id="editTaskDescription"
+            class="border border-gray-300 rounded-lg p-3 w-full mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[80px] max-h-[200px]"
+          ></textarea>
+          <div class="flex w-full justify-center gap-2">
+            <button
+              id="saveEdit"
+              class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
+            >
+              Save
+            </button>
+            <button
+              id="closeEditModal"
+              class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
