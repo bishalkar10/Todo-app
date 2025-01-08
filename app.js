@@ -64,7 +64,8 @@ function renderMainList() {
 
 // Render archived task list
 function renderArchivedList() {
-  const archivedList = document.getElementById("archivedList");
+  const archivedList = document.querySelector("#archivedList ul");
+
   archivedList.innerHTML = "";
 
   tasks
@@ -86,25 +87,25 @@ function createTaskElement(task) {
       <h3 class="font-bold">${task.title}</h3>
       <p>${task.description}</p>
     </div>
-    <div class="hidden absolute bg-white right-4 top-0 h-full w-max group-hover:flex items-center">
+    <div class="hidden absolute bg-white right-4 top-0 h-full w-max group-hover:flex gap-2 items-center">
       ${
         !task.archived
           ? `
-      <button class="w-10 aspect-square rounded-full hover:bg-green-100 text-green-500" onclick="toggleComplete(${task.id})">
+      <button class="w-8 h-8 rounded-lg bg-green-100 hover:bg-green-200 text-green-600 flex items-center justify-center" onclick="toggleComplete(${task.id})">
         <i class="fas text-lg fa-check"></i>
       </button>
       
-      <button class="w-10 aspect-square rounded-full hover:bg-blue-100 text-blue-500" onclick="editTask(${task.id})">
+      <button class="w-8 h-8 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-600 flex items-center justify-center" onclick="editTask(${task.id})">
         <i class="fas text-lg fa-edit"></i>
       </button> `
           : ""
       }
-      <button class="w-10 aspect-square rounded-full hover:bg-yellow-100 text-yellow-500" onclick="toggleArchive(${
+      <button class="w-8 h-8 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-600 flex items-center justify-center" onclick="toggleArchive(${
         task.id
       })">
         <i class="fas text-lg ${task.archived ? "fa-undo" : "fa-archive"}"></i>
       </button>
-      <button class="w-10 aspect-square rounded-full hover:bg-red-100 text-red-500" onclick="removeTask(${
+      <button class="w-8 h-8 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 flex items-center justify-center" onclick="removeTask(${
         task.id
       })">
         <i class="fas text-lg fa-trash"></i>
@@ -205,6 +206,13 @@ function updateLocalStorage() {
 function clearInputs() {
   document.getElementById("taskTitle").value = "";
   document.getElementById("taskDescription").value = "";
+}
+
+function clearAllArchived() {
+  tasks = tasks.filter((item) => !item.archived);
+  updateLocalStorage();
+  renderTasks();
+  toggleArchived();
 }
 
 // Initial rendering
