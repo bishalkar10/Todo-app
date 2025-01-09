@@ -64,9 +64,12 @@
 
       <div
         id="newTaskModal"
-        class="fixed hidden z-10 inset-0 items-center justify-center"
+        class="fixed hidden z-10 inset-0 items-center justify-center bg-indigo-100"
       >
-        <div class="backdrop-blur-md p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+        <form
+          novalidate
+          class="backdrop-blur-md p-6 rounded-lg shadow-lg w-[90%] max-w-md"
+        >
           <h2 class="text-xl mb-2">Add New Task</h2>
 
           <div class="mb-4">
@@ -108,19 +111,19 @@
             <button
               type="submit"
               id="addTask"
-              class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
+              class="bg-green-500 w-full text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
             >
               Add Task
             </button>
             <button
               type="button"
               id="closeNewTaskModal"
-              class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+              class="bg-red-500 w-full text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
             >
-              Close
+              Cancel
             </button>
           </div>
-        </div>
+        </form>
       </div>
 
       <div id="mainList" class="flex flex-col gap-2"></div>
@@ -130,7 +133,10 @@
         id="editModal"
         class="fixed hidden inset-0 items-center justify-center"
       >
-        <div class="backdrop-blur-md p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+        <form
+          novalidate
+          class="backdrop-blur-md p-6 rounded-lg shadow-lg w-[90%] max-w-md"
+        >
           <h2 class="text-xl mb-2">Edit Task</h2>
           <input
             id="editTaskTitle"
@@ -149,13 +155,14 @@
               Save
             </button>
             <button
+              type="button"
               id="closeEditModal"
               class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
             >
               Close
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </body>

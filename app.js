@@ -2,18 +2,18 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let showArchived = false;
 
-document.getElementById("addTask").addEventListener("click", addTask);
-document
-  .getElementById("toggleArchived")
-  .addEventListener("click", toggleArchived);
+const addTaskBtn = document.getElementById("addTask");
+const toggleArchivedBtn = document.getElementById("toggleArchived");
+const closeNewTaskModalBtn = document.getElementById("closeNewTaskModal");
 const editTaskmodal = document.getElementById("editModal");
 const newtaskModal = document.getElementById("newTaskModal");
-document
-  .getElementById("openTaskModal")
-  .addEventListener("click", toggleNewTaskModal);
-document
-  .getElementById("closeNewTaskModal")
-  .addEventListener("click", () => toggleModal(newtaskModal));
+const openTaskModalBtn = document.getElementById("openTaskModal");
+addTaskBtn.addEventListener("click", addTask);
+toggleArchivedBtn.addEventListener("click", toggleArchived);
+openTaskModalBtn.addEventListener("click", () => toggleModal(newtaskModal));
+closeNewTaskModalBtn.addEventListener("click", () => toggleModal(newtaskModal));
+const closeBtn = document.getElementById("closeEditModal");
+closeBtn.addEventListener("click", () => toggleModal(editTaskmodal));
 
 // Add a new task
 function addTask(e) {
@@ -79,10 +79,10 @@ function renderArchivedList() {
 
 // Create task HTML element
 function createTaskElement(task) {
-  const taskDiv = document.createElement("div");
-  taskDiv.className =
+  const taskCard = document.createElement("li");
+  taskCard.className =
     "relative group p-4 bg-white rounded shadow flex justify-between items-center";
-  taskDiv.innerHTML = `
+  taskCard.innerHTML = `
     <div class="${task.completed ? "line-through text-gray-500" : ""}">
       <h3 class="font-bold">${task.title}</h3>
       <p>${task.description}</p>
@@ -112,7 +112,7 @@ function createTaskElement(task) {
       </button>
     </div>
   `;
-  return taskDiv;
+  return taskCard;
 }
 
 // Toggle task completion
@@ -147,7 +147,8 @@ function editTask(id) {
 
   // Attach event listener for Save button
   const saveBtn = document.getElementById("saveEdit");
-  saveBtn.onclick = function () {
+  saveBtn.onclick = function (e) {
+    e.preventDefault();
     const newTitle = document.getElementById("editTaskTitle").value.trim();
     const newDescription = document
       .getElementById("editTaskDescription")
@@ -164,12 +165,6 @@ function editTask(id) {
     } else {
       alert("Title and description must be at least 4 characters long.");
     }
-  };
-
-  // Attach event listener for Close button
-  const closeBtn = document.getElementById("closeEditModal");
-  closeBtn.onclick = function () {
-    toggleModal(editTaskmodal);
   };
 }
 
