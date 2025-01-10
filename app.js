@@ -8,12 +8,16 @@ const closeNewTaskModalBtn = document.getElementById("closeNewTaskModal");
 const editTaskmodal = document.getElementById("editModal");
 const newtaskModal = document.getElementById("newTaskModal");
 const openTaskModalBtn = document.getElementById("openTaskModal");
+const editTaskTitleInput = document.getElementById("editTaskTitle");
+const editTaskDescriptionInput = document.getElementById("editTaskDescription");
+const closeEditModalBtn = document.getElementById("closeEditModal");
+const archivedList = document.querySelector("#archivedList ul");
+
 addTaskBtn.addEventListener("click", addTask);
 toggleArchivedBtn.addEventListener("click", toggleArchived);
 openTaskModalBtn.addEventListener("click", () => toggleModal(newtaskModal));
 closeNewTaskModalBtn.addEventListener("click", () => toggleModal(newtaskModal));
-const closeBtn = document.getElementById("closeEditModal");
-closeBtn.addEventListener("click", () => toggleModal(editTaskmodal));
+closeEditModalBtn.addEventListener("click", () => toggleModal(editTaskmodal));
 
 // Add a new task
 function addTask(e) {
@@ -39,7 +43,7 @@ function addTask(e) {
   updateLocalStorage();
   renderTasks();
   clearInputs();
-  toggleModal(newtaskModal);
+  toggleModal(newtaskModal); //close the modal
 }
 
 // Render tasks based on their archived status
@@ -64,8 +68,6 @@ function renderMainList() {
 
 // Render archived task list
 function renderArchivedList() {
-  const archivedList = document.querySelector("#archivedList ul");
-
   archivedList.innerHTML = "";
 
   tasks
@@ -81,13 +83,13 @@ function renderArchivedList() {
 function createTaskElement(task) {
   const taskCard = document.createElement("li");
   taskCard.className =
-    "relative group p-4 bg-white rounded shadow flex justify-between items-center";
+    "relative group p-4 backdrop-blur-md rounded shadow flex justify-between items-center transform hover:scale-105 duration-150";
   taskCard.innerHTML = `
     <div class="${task.completed ? "line-through text-gray-500" : ""}">
       <h3 class="font-bold">${task.title}</h3>
       <p>${task.description}</p>
     </div>
-    <div class="hidden absolute bg-white right-4 top-0 h-full w-max group-hover:flex gap-2 items-center">
+    <div class="hidden absolute backdrop-blur-md right-4 top-0 h-full w-max group-hover:flex gap-2 items-center">
       ${
         !task.archived
           ? `
@@ -129,30 +131,20 @@ function toggleModal(modal) {
   modal.classList.toggle("hidden");
 }
 
-function toggleNewTaskModal() {
-  newtaskModal.classList.toggle("flex");
-  newtaskModal.classList.toggle("hidden");
-}
-
 // Edit a task
 function editTask(id) {
   const task = tasks.find((t) => t.id === id);
 
-  // Pre-fill modal with current task data
-  document.getElementById("editTaskTitle").value = task.title;
-  document.getElementById("editTaskDescription").value = task.description;
+  toggleModal(editTaskmodal); // open the modal
 
-  // Show the modal
-  toggleModal(editTaskmodal);
+  editTaskTitleInput.value = task.title;
+  editTaskDescriptionInput.value = task.description;
 
-  // Attach event listener for Save button
   const saveBtn = document.getElementById("saveEdit");
-  saveBtn.onclick = function (e) {
+  saveBtn.onclick = (e) => {
     e.preventDefault();
-    const newTitle = document.getElementById("editTaskTitle").value.trim();
-    const newDescription = document
-      .getElementById("editTaskDescription")
-      .value.trim();
+    const newTitle = editTaskTitleInput.value.trim();
+    const newDescription = editTaskDescriptionInput.value.trim();
 
     if (newTitle.length >= 4 && newDescription.length >= 4) {
       task.title = newTitle;
@@ -185,10 +177,10 @@ function removeTask(id) {
 
 // Toggle archived tasks visibility
 function toggleArchived() {
-  const archivedList = document.getElementById("archivedList");
+  const archivedListContainer = document.getElementById("archivedList");
 
-  archivedList.classList.toggle("hidden");
-  archivedList.classList.toggle("flex");
+  archivedListContainer.classList.toggle("hidden");
+  archivedListContainer.classList.toggle("flex");
   renderTasks();
 }
 
